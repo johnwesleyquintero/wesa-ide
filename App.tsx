@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { FileExplorer } from './components/FileExplorer';
 import { Editor } from './components/Editor';
 import { AIAssistant } from './components/AIAssistant';
@@ -8,14 +8,14 @@ import { Resizer } from './components/Resizer';
 import { Toast } from './components/Toast';
 import { FileNode } from './types';
 import { initialFiles } from './constants';
+import { useResizablePanel } from './hooks/useResizablePanel';
 
 const App: React.FC = () => {
   const [files, setFiles] = useState<FileNode[]>(initialFiles);
   const [activeFileId, setActiveFileId] = useState<string>('1');
   const [isLoading, setIsLoading] = useState(false);
-  const [aiPanelHeight, setAiPanelHeight] = useState(250);
-  const [isResizing, setIsResizing] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const { height: aiPanelHeight, handleMouseDown } = useResizablePanel(250, 150, 0.8);
 
   const activeFile = useMemo(() => files.find(f => f.id === activeFileId), [files, activeFileId]);
 
@@ -30,35 +30,6 @@ const App: React.FC = () => {
   const handleSelectFile = (fileId: string) => {
     setActiveFileId(fileId);
   };
-
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsResizing(true);
-  }, []);
-
-  const handleMouseUp = useCallback(() => {
-    setIsResizing(false);
-  }, []);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!isResizing) return;
-    const newHeight = window.innerHeight - e.clientY;
-    // Set constraints for resizing
-    if (newHeight > 150 && newHeight < window.innerHeight * 0.8) {
-      setAiPanelHeight(newHeight);
-    }
-  }, [isResizing]);
-
-  useEffect(() => {
-    if (isResizing) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    }
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isResizing, handleMouseMove, handleMouseUp]);
 
   return (
     <div className="flex flex-col h-screen bg-primary font-sans overflow-hidden">

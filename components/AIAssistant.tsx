@@ -32,6 +32,26 @@ const TaskButton: React.FC<{ onClick: () => void, disabled: boolean, children: R
     </button>
 );
 
+const MarkdownRenderer: React.FC<{ text: string }> = ({ text }) => {
+  const segments = text.split(/(```(?:\w+)?\n[\s\S]*?\n```)/g);
+
+  return (
+    <div className="text-sm text-text-primary whitespace-pre-wrap font-mono">
+      {segments.map((segment, index) => {
+        if (segment.startsWith('```')) {
+          const code = segment.replace(/```\w*\n/,'').replace(/\n```/, '');
+          return (
+            <pre key={index} className="bg-editor p-3 my-2 rounded-md overflow-x-auto">
+              <code>{code}</code>
+            </pre>
+          );
+        }
+        return <span key={index}>{segment}</span>;
+      })}
+    </div>
+  );
+};
+
 
 export const AIAssistant: React.FC<AIAssistantProps> = ({ activeFile, onContentChange, isLoading, setIsLoading, setToastMessage, style }) => {
   const [customPrompt, setCustomPrompt] = useState('');
@@ -77,7 +97,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ activeFile, onContentC
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <pre className="text-sm text-text-primary whitespace-pre-wrap font-mono">{aiResponse || 'Select an action or ask me anything about the current file.'}</pre>
+          <MarkdownRenderer text={aiResponse || 'Select an action or ask me anything about the current file.'} />
         )}
       </div>
       <div className="p-4 border-t border-border-color bg-primary">

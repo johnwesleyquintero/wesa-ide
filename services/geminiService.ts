@@ -18,7 +18,6 @@ const getSystemInstruction = (task: AITask | string): string => {
 };
 
 export const getAIResponse = async (task: AITask | string, code: string): Promise<string> => {
-  // This is a placeholder for a real API key which should be stored in an environment variable.
   // The guidance says to assume process.env.API_KEY is available.
   const apiKey = process.env.API_KEY;
   if (!apiKey) {
