@@ -85,6 +85,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ activeFile, onContentC
       e.preventDefault();
       if(customPrompt.trim()) {
           handleAITask(customPrompt);
+          setCustomPrompt('');
       }
   }
 

@@ -68,4 +68,21 @@ export const debounce = (func, delay) => {
 };
 `,
   },
+  {
+    id: '4',
+    name: 'index.html',
+    language: 'html',
+    content: `<!DOCTYPE html>
+<html>
+<head>
+    <title>My App</title>
+</head>
+<body>
+    <h1>Welcome to My App</h1>
+    <div id="app"></div>
+    <script src="index.js"></script>
+</body>
+</html>
+`,
+  },
 ];

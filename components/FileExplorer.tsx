@@ -31,6 +31,14 @@ const JsonIcon = () => (
     </svg>
 );
 
+const HtmlIcon = () => (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+        <path d="M8.5 10.5L5 14L8.5 17.5" stroke="#E44D26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15.5 10.5L19 14L15.5 17.5" stroke="#E44D26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 6L10 22" stroke="#F16529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
 
 const getIcon = (language: string) => {
     switch (language) {
@@ -40,6 +48,8 @@ const getIcon = (language: string) => {
             return <JavascriptIcon />;
         case 'json':
             return <JsonIcon />;
+        case 'html':
+            return <HtmlIcon />;
         default:
             return <JsonIcon />;
     }
