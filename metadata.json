@@ -1,0 +1,5 @@
+{
+  "name": "WesAI Code Companion",
+  "description": "An AI-powered web IDE to assist with coding, refactoring, and explanation tasks, acting as your personal coding partner.",
+  "requestFramePermissions": []
+}
